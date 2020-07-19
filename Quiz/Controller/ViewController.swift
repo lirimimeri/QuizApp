@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import SQLite3
 
 class ViewController: UIViewController {
-
+    
+    var db: OpaquePointer?
+    
     @IBOutlet weak var questionCounter: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var questionLabel: UILabel!
@@ -29,6 +32,22 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         updateQuestion()
         updateUI()
+        
+        let fileUrl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("historyDatabase.sqlite")
+        
+        if sqlite3_open(fileUrl.path, &db) != SQLITE_OK {
+            print("Error opening database")
+            return
+        }
+        
+        let createTableQuery = "CREATE TABLE IF NOT EXISTS History (score INTEGER, thetime TEXT, thedate TEXT)"
+        if sqlite3_exec(db, createTableQuery, nil, nil, nil) != SQLITE_OK {
+            print("Error creating table")
+            return
+        }
+       
+        print("Everything is fine")
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,5 +102,21 @@ class ViewController: UIViewController {
         questionCounter.text = "\(questionNumber + 1)/\(questions.list.count)"
         
     }
-}
+    
+    func createTable() {
+//        let createTable = self.historyTable.create { (table) in
+//            table.column(self.score)
+//            table.column(self.time)
+//
+        }
+    }
+    
+    func insertValues() {
+        
+    }
+    
+    func getData() {
+        
+    }
+
 
