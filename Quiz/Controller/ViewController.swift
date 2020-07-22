@@ -9,6 +9,8 @@
 import UIKit
 import SQLite3
 
+var list = [History]()
+
 class ViewController: UIViewController {
     
     var db: OpaquePointer?
@@ -26,28 +28,18 @@ class ViewController: UIViewController {
     var questionNumber: Int = 0
     var score: Int = 0
     var selectedAnswer: Int = 0
+    var date = Date()
+    var formatter = DateFormatter()
+    let calendar = Calendar.current
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateQuestion()
         updateUI()
-        
-        let fileUrl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("historyDatabase.sqlite")
-        
-        if sqlite3_open(fileUrl.path, &db) != SQLITE_OK {
-            print("Error opening database")
-            return
-        }
-        
-        let createTableQuery = "CREATE TABLE IF NOT EXISTS History (score INTEGER, thetime TEXT, thedate TEXT)"
-        if sqlite3_exec(db, createTableQuery, nil, nil, nil) != SQLITE_OK {
-            print("Error creating table")
-            return
-        }
-       
-        print("Everything is fine")
-        
+        openDatabase()
+        createTable()
     }
 
     override func didReceiveMemoryWarning() {
@@ -79,6 +71,7 @@ class ViewController: UIViewController {
             updateUI()
         }
         else {
+            insertValues()
             let alert = UIAlertController(title: "Great!", message: "End of Quiz. Do you want to start another one?", preferredStyle: .alert)
             let restartAction = UIAlertAction(title: "Restart", style: .default, handler: {
                 action in self.restartQuiz()
@@ -104,19 +97,58 @@ class ViewController: UIViewController {
     }
     
     func createTable() {
-//        let createTable = self.historyTable.create { (table) in
-//            table.column(self.score)
-//            table.column(self.time)
-//
+        let createTableQuery = "CREATE TABLE IF NOT EXISTS History (score INTEGER, thetime TEXT, thedate TEXT);"
+        
+        sqlite3_exec(db, createTableQuery, nil, nil, nil)
+        if sqlite3_exec(db, createTableQuery, nil, nil, nil) != SQLITE_OK {
+            print("Error creating table")
+            return
         }
     }
     
     func insertValues() {
+        formatter.dateFormat = "dd.MM.yyyy"
+        let datenow = formatter.string(from: date)
+        let hour = String(calendar.component(.hour, from: date))
+        let minutes = String(calendar.component(.minute, from: date))
+        
+        let timenow = hour + ":" + minutes
+        var stmt: OpaquePointer?
+        let queryString = "INSERT INTO History (score, thetime, thedate) VALUES (?,?);"
+        
+        sqlite3_prepare(db, queryString, -1, &stmt, nil)
+        
+        sqlite3_bind_int(stmt, 1, Int32(score))
+        sqlite3_bind_text(stmt, 2, datenow, -1, nil)
+        sqlite3_bind_text(stmt, 3, timenow, -1, nil)
         
     }
     
     func getData() {
+        let query = "SELECT * FROM HISTORY"
+        var stmt: OpaquePointer?
         
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) == SQLITE_OK {
+           print("\n")
+            while (sqlite3_step(stmt) == SQLITE_ROW)
+            {
+                let score = Int(sqlite3_column_int(stmt, 0))
+                let date = String(describing: sqlite3_column_text(stmt, 1))
+                let time = String(describing: sqlite3_column_text(stmt, 2))
+                
+                list.append(History(score: Int(score), date: date, time: time))
+            }
+        }
+    }
+    
+    func openDatabase() {
+        let fileUrl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("historyDatabase.sqlite")
+        
+        if sqlite3_open(fileUrl.path, &db) != SQLITE_OK {
+            print("Error opening database")
+            return
+        }
     }
 
 
+}

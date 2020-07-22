@@ -14,6 +14,8 @@
 		A986763724B74BDE00A8C508 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A986763524B74BDE00A8C508 /* Main.storyboard */; };
 		A986763924B74BDE00A8C508 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A986763824B74BDE00A8C508 /* Assets.xcassets */; };
 		A986763C24B74BDE00A8C508 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A986763A24B74BDE00A8C508 /* LaunchScreen.storyboard */; };
+		A9E502D024C8DCB700E607F6 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E502CF24C8DCB700E607F6 /* History.swift */; };
+		A9E502D224C8E21600E607F6 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E502D124C8E21600E607F6 /* HistoryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +41,8 @@
 		A986763824B74BDE00A8C508 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A986763B24B74BDE00A8C508 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A986763D24B74BDE00A8C508 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9E502CF24C8DCB700E607F6 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		A9E502D124C8E21600E607F6 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +61,7 @@
 			children = (
 				A986763124B74BDE00A8C508 /* AppDelegate.swift */,
 				A986763324B74BDE00A8C508 /* ViewController.swift */,
+				A9E502D124C8E21600E607F6 /* HistoryViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -75,6 +80,7 @@
 			children = (
 				A93399C024B8AACD00B0C1AC /* Question.swift */,
 				A93399C224B8AC9C00B0C1AC /* QuestionBank.swift */,
+				A9E502CF24C8DCB700E607F6 /* History.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -191,7 +197,9 @@
 				A93399C124B8AACD00B0C1AC /* Question.swift in Sources */,
 				A93399C324B8AC9C00B0C1AC /* QuestionBank.swift in Sources */,
 				A986763424B74BDE00A8C508 /* ViewController.swift in Sources */,
+				A9E502D224C8E21600E607F6 /* HistoryViewController.swift in Sources */,
 				A986763224B74BDE00A8C508 /* AppDelegate.swift in Sources */,
+				A9E502D024C8DCB700E607F6 /* History.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

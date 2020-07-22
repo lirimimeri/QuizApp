@@ -32,6 +32,5 @@ class QuestionBank
         list.append(Question(questionText: "Correct Pytagoras Theorem?", choiceA: "a + b = c", choiceB: "a^2 + b^2 = c^2", choiceC: "a - b = c", choiceD: "none of these", correctChoice: 1))
         
         list.append(Question(questionText: "Correct Pytagoras Theorem?", choiceA: "a + b = c", choiceB: "a^2 + b^2 = c^2", choiceC: "a - b = c", choiceD: "none of these", correctChoice: 1))
-        
     }
 }
